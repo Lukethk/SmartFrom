@@ -69,6 +69,7 @@ Plataforma web para extraer datos de formularios físicos, validar resultados y 
 
 1. Crea un nuevo proyecto Vercel apuntando al directorio `backend/`.
 2. Runtime: Python (detectado por `backend/vercel.json`).
+   - Vercel instalará dependencias desde `backend/requirements.txt`.
 3. Configura variables de entorno:
    - `APP_NAME=SmartForm API`
    - `APP_ENV=production`
