@@ -12,3 +12,65 @@ body {
   margin: 0;
   min-height: 100vh;
 }
+
+@layer components {
+  .glass-panel {
+    @apply border border-white/70 bg-white/70 backdrop-blur-xl;
+  }
+
+  .card-surface {
+    @apply border border-white/80 bg-white/80 shadow-[0_10px_40px_rgba(15,23,42,0.08)] backdrop-blur;
+  }
+
+  .hero-card {
+    background:
+      linear-gradient(135deg, rgba(19, 49, 92, 0.96), rgba(26, 90, 136, 0.92)),
+      radial-gradient(circle at top right, rgba(255, 209, 102, 0.28), transparent 32%);
+    box-shadow: 0 25px 70px rgba(19, 49, 92, 0.28);
+  }
+
+  .soft-input {
+    @apply rounded-2xl border border-slate-200/90 bg-white/90 px-4 py-3 text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-brand-deep focus:ring-4 focus:ring-brand-deep/10;
+  }
+
+  .cta-button {
+    background: linear-gradient(135deg, #13315c 0%, #1b5a88 100%);
+    box-shadow: 0 14px 35px rgba(19, 49, 92, 0.25);
+    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+    box-shadow: 0 18px 42px rgba(19, 49, 92, 0.28);
+  }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(24px, -18px, 0) scale(1.05); }
+}
+
+@keyframes floatMedium {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-20px, 14px, 0) scale(1.08); }
+}
+
+@keyframes floatFast {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(12px, -10px, 0) scale(1.03); }
+}
+
+@layer utilities {
+  .animate-float-slow {
+    animation: floatSlow 14s ease-in-out infinite;
+  }
+
+  .animate-float-medium {
+    animation: floatMedium 11s ease-in-out infinite;
+  }
+
+  .animate-float-fast {
+    animation: floatFast 8s ease-in-out infinite;
+  }
+}

@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { confirmPasswordReset } from "../api/client";
+import { AuthShell } from "../components/AuthShell";
 
 export default function ResetPasswordPage() {
   const [token, setToken] = useState("");
@@ -21,16 +22,22 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4">
-      <form className="w-full max-w-md space-y-4 rounded-xl bg-white p-6 shadow-md" onSubmit={submit}>
-        <h2 className="font-display text-2xl font-semibold text-brand-deep">Restablecer contraseña</h2>
-        <input className="w-full rounded border p-2 font-mono text-sm" placeholder="Token" value={token} onChange={(e) => setToken(e.target.value)} />
-        <input className="w-full rounded border p-2" type="password" placeholder="Nueva contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button className="w-full rounded bg-brand-deep py-2 font-semibold text-white" type="submit">Cambiar contraseña</button>
-        {message ? <p className="text-sm text-green-700">{message}</p> : null}
-        {error ? <p className="text-sm text-red-700">{error}</p> : null}
-        <p className="text-sm"><Link to="/login" className="text-brand-deep">Volver al login</Link></p>
+    <AuthShell
+      title="Restablece tu contraseña con seguridad"
+      description="Pega tu token temporal, crea una nueva clave y vuelve al flujo de trabajo sin perder contexto."
+    >
+      <form className="space-y-4" onSubmit={submit}>
+        <div>
+          <h2 className="font-display text-3xl font-semibold text-brand-deep">Restablecer contraseña</h2>
+          <p className="mt-2 text-sm text-slate-600">Usa el token recibido para definir una nueva contraseña segura.</p>
+        </div>
+        <input className="soft-input w-full font-mono text-sm" placeholder="Token" value={token} onChange={(e) => setToken(e.target.value)} />
+        <input className="soft-input w-full" type="password" placeholder="Nueva contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <button className="cta-button w-full rounded-2xl px-4 py-3 font-semibold text-white" type="submit">Cambiar contraseña</button>
+        {message ? <p className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{message}</p> : null}
+        {error ? <p className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</p> : null}
+        <p className="text-sm text-slate-600"><Link to="/login" className="font-semibold text-brand-deep">Volver al login</Link></p>
       </form>
-    </div>
+    </AuthShell>
   );
 }

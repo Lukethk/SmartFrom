@@ -73,28 +73,40 @@ export default function TemplatesPage() {
   };
 
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
-      <section className="space-y-4 rounded-xl bg-white p-4 shadow-sm">
-        <h2 className="font-display text-xl text-brand-deep">Nueva plantilla</h2>
+    <div className="grid gap-6 xl:grid-cols-5">
+      <section className="card-surface space-y-4 rounded-[26px] p-5 xl:col-span-3">
+        <div>
+          <p className="text-xs uppercase tracking-[0.28em] text-slate-500">Configuración</p>
+          <h2 className="mt-2 font-display text-3xl font-semibold text-brand-deep">Nueva plantilla</h2>
+          <p className="mt-2 text-sm text-slate-600">
+            Sube tu Excel base, define los campos lógicos y deja listo el mapeo para procesar lotes con consistencia.
+          </p>
+        </div>
         <form className="space-y-3" onSubmit={uploadTemplate}>
-          <input className="w-full rounded border p-2" placeholder="Nombre de plantilla" value={name} onChange={(e) => setName(e.target.value)} required />
-          <input className="w-full rounded border p-2" type="file" accept=".xlsx" onChange={(e) => setFile(e.target.files?.[0] ?? null)} required />
-          <textarea className="h-28 w-full rounded border p-2 font-mono text-sm" value={fieldsText} onChange={(e) => setFieldsText(e.target.value)} />
-          <button className="rounded bg-brand-deep px-4 py-2 text-white" type="submit">Guardar plantilla</button>
+          <input className="soft-input w-full" placeholder="Nombre de plantilla" value={name} onChange={(e) => setName(e.target.value)} required />
+          <input className="soft-input w-full" type="file" accept=".xlsx" onChange={(e) => setFile(e.target.files?.[0] ?? null)} required />
+          <textarea className="soft-input h-32 w-full font-mono text-sm" value={fieldsText} onChange={(e) => setFieldsText(e.target.value)} />
+          <button className="cta-button rounded-2xl px-4 py-3 text-white" type="submit">Guardar plantilla</button>
         </form>
       </section>
 
-      <section className="space-y-4 rounded-xl bg-white p-4 shadow-sm">
-        <h2 className="font-display text-xl text-brand-deep">Mapeador visual (rápido)</h2>
-        <select className="w-full rounded border p-2" value={selectedTemplateId} onChange={(e) => setSelectedTemplateId(e.target.value)}>
+      <section className="card-surface space-y-4 rounded-[26px] p-5 xl:col-span-2">
+        <div>
+          <p className="text-xs uppercase tracking-[0.28em] text-slate-500">Mapeo</p>
+          <h2 className="mt-2 font-display text-3xl font-semibold text-brand-deep">Mapeador visual</h2>
+          <p className="mt-2 text-sm text-slate-600">
+            Define cómo cada campo lógico cae en columnas reales del Excel.
+          </p>
+        </div>
+        <select className="soft-input w-full" value={selectedTemplateId} onChange={(e) => setSelectedTemplateId(e.target.value)}>
           {templates.map((tpl) => <option key={tpl.id} value={tpl.id}>{tpl.name}</option>)}
         </select>
-        <textarea className="h-32 w-full rounded border p-2 font-mono text-sm" value={mappingText} onChange={(e) => setMappingText(e.target.value)} />
-        <button className="rounded bg-brand-accent px-4 py-2 font-semibold" onClick={saveMapping}>Guardar mapeo</button>
+        <textarea className="soft-input h-36 w-full font-mono text-sm" value={mappingText} onChange={(e) => setMappingText(e.target.value)} />
+        <button className="cta-button rounded-2xl px-4 py-3 font-semibold text-white" onClick={saveMapping}>Guardar mapeo</button>
         <p className="text-sm text-slate-600">{message}</p>
         <ul className="space-y-2 text-sm">
           {mappings.map((map) => (
-            <li key={map.id} className="rounded border p-2">
+            <li key={map.id} className="rounded-2xl border border-slate-200 bg-white/80 p-3 shadow-sm">
               <span className="font-semibold">{map.name}</span> - {map.sheet_name}
             </li>
           ))}

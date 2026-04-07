@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { login } from "../api/client";
+import { AuthShell } from "../components/AuthShell";
 import { useAuth } from "../hooks/useAuth";
 
 export default function LoginPage() {
@@ -24,16 +25,24 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4">
-      <form className="w-full max-w-md space-y-4 rounded-xl bg-white p-6 shadow-md" onSubmit={submit}>
-        <h2 className="font-display text-2xl font-semibold text-brand-deep">Iniciar sesión</h2>
-        <input className="w-full rounded border p-2" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input className="w-full rounded border p-2" placeholder="Contraseña" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        {error ? <p className="text-sm text-red-600">{error}</p> : null}
-        <button className="w-full rounded bg-brand-deep py-2 font-semibold text-white" type="submit">Entrar</button>
-        <p className="text-sm">¿No tienes cuenta? <Link to="/register" className="text-brand-deep">Regístrate</Link></p>
-        <p className="text-sm"><Link to="/forgot-password" className="text-brand-deep">Olvidé mi contraseña</Link></p>
+    <AuthShell
+      title="Inicia sesión y retoma el control"
+      description="Accede a tu espacio de trabajo, procesa lotes y exporta resultados en una interfaz más clara, moderna y rápida."
+    >
+      <form className="space-y-4" onSubmit={submit}>
+        <div>
+          <h2 className="font-display text-3xl font-semibold text-brand-deep">Iniciar sesión</h2>
+          <p className="mt-2 text-sm text-slate-600">Entra con tu correo y empieza a trabajar en tu flujo de documentos.</p>
+        </div>
+        <input className="soft-input w-full" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input className="soft-input w-full" placeholder="Contraseña" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        {error ? <p className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</p> : null}
+        <button className="cta-button w-full rounded-2xl px-4 py-3 font-semibold text-white" type="submit">Entrar</button>
+        <div className="flex items-center justify-between text-sm">
+          <p className="text-slate-600">¿No tienes cuenta? <Link to="/register" className="font-semibold text-brand-deep">Regístrate</Link></p>
+          <Link to="/forgot-password" className="font-semibold text-brand-deep">Olvidé mi contraseña</Link>
+        </div>
       </form>
-    </div>
+    </AuthShell>
   );
 }

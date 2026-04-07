@@ -152,38 +152,38 @@ export default function ValidationPage() {
   };
 
   return (
-    <div className="space-y-5">
-      <section className="grid gap-4 rounded-xl bg-white p-4 shadow-sm md:grid-cols-4">
-        <select className="rounded border p-2" value={selectedTemplateId} onChange={(e) => setSelectedTemplateId(e.target.value)}>
+    <div className="space-y-6">
+      <section className="card-surface grid gap-4 rounded-[26px] p-5 md:grid-cols-4">
+        <select className="soft-input rounded-2xl p-3" value={selectedTemplateId} onChange={(e) => setSelectedTemplateId(e.target.value)}>
           {templates.map((tpl) => <option key={tpl.id} value={tpl.id}>{tpl.name}</option>)}
         </select>
-        <input className="rounded border p-2" placeholder="Nombre del lote" value={batchName} onChange={(e) => setBatchName(e.target.value)} />
-        <input className="rounded border p-2" type="file" multiple onChange={(e) => setFiles(Array.from(e.target.files ?? []))} />
-        <button className="rounded bg-brand-deep px-4 py-2 text-white" onClick={createNewBatch}>Crear lote</button>
+        <input className="soft-input rounded-2xl p-3" placeholder="Nombre del lote" value={batchName} onChange={(e) => setBatchName(e.target.value)} />
+        <input className="soft-input rounded-2xl p-3" type="file" multiple onChange={(e) => setFiles(Array.from(e.target.files ?? []))} />
+        <button className="cta-button rounded-2xl px-4 py-3 text-white" onClick={createNewBatch}>Crear lote</button>
       </section>
 
-      <section className="grid gap-4 rounded-xl bg-white p-4 shadow-sm md:grid-cols-4">
-        <select className="rounded border p-2" value={selectedBatchId} onChange={(e) => setSelectedBatchId(e.target.value)}>
+      <section className="card-surface grid gap-4 rounded-[26px] p-5 md:grid-cols-4">
+        <select className="soft-input rounded-2xl p-3" value={selectedBatchId} onChange={(e) => setSelectedBatchId(e.target.value)}>
           {batches.map((b) => <option key={b.id} value={b.id}>{b.name} ({b.status})</option>)}
         </select>
-        <select className="rounded border p-2" value={selectedMappingId} onChange={(e) => setSelectedMappingId(e.target.value)}>
+        <select className="soft-input rounded-2xl p-3" value={selectedMappingId} onChange={(e) => setSelectedMappingId(e.target.value)}>
           {mappings.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
         </select>
-        <input className="rounded border p-2" placeholder="Filtrar por logical key" value={search} onChange={(e) => setSearch(e.target.value)} />
+        <input className="soft-input rounded-2xl p-3" placeholder="Filtrar por logical key" value={search} onChange={(e) => setSearch(e.target.value)} />
         <div className="flex gap-2">
-          <button className="rounded bg-brand-accent px-4 py-2 font-semibold" onClick={saveEdits}>Guardar validación</button>
-          <button className="rounded border px-4 py-2" onClick={exportBatch}>Exportar</button>
+          <button className="cta-button rounded-2xl px-4 py-3 font-semibold text-white" onClick={saveEdits}>Guardar validación</button>
+          <button className="rounded-2xl border border-slate-200 bg-white px-4 py-3 font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md" onClick={exportBatch}>Exportar</button>
         </div>
       </section>
 
-      <section className="rounded-xl bg-white p-3 shadow-sm">
-        <div className="mb-2 grid grid-cols-12 gap-2 border-b pb-2 text-xs font-semibold uppercase text-slate-500">
+      <section className="card-surface overflow-hidden rounded-[26px] p-4">
+        <div className="mb-3 grid grid-cols-12 gap-2 border-b border-slate-200 pb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
           <div className="col-span-3">Campo</div>
           <div className="col-span-5">Valor</div>
           <div className="col-span-2">Confianza</div>
           <div className="col-span-2">Estado</div>
         </div>
-        <List height={480} itemCount={filteredRows.length} itemSize={44} width="100%">
+        <List height={480} itemCount={filteredRows.length} itemSize={52} width="100%">
           {Row}
         </List>
       </section>
