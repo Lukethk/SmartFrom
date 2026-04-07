@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     reset_token_expire_minutes: int = 30
     algorithm: str = "HS256"
 
-    database_url: str = "sqlite:///./smartform.db"
+    database_url: str = "sqlite:////tmp/smartform.db"
     redis_url: str = "redis://redis:6379/0"
     gemini_api_key: str = ""
     gemini_model: str = "gemini-2.5-flash"

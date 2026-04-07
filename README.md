@@ -77,7 +77,7 @@ Plataforma web para extraer datos de formularios físicos, validar resultados y 
    - `ACCESS_TOKEN_EXPIRE_MINUTES=30`
    - `REFRESH_TOKEN_EXPIRE_MINUTES=10080`
    - `RESET_TOKEN_EXPIRE_MINUTES=30`
-   - `DATABASE_URL=<postgresql+psycopg2://... de Neon>`
+   - `DATABASE_URL=<postgresql+psycopg2://... de Neon>` (recomendado)
    - `GEMINI_API_KEY=<tu-api-key>`
    - `GEMINI_MODEL=gemini-2.5-flash`
    - `CORS_ORIGINS=<url-del-frontend>`
@@ -85,6 +85,8 @@ Plataforma web para extraer datos de formularios físicos, validar resultados y 
 4. Despliega y verifica:
    - `/health`
    - `/docs`
+
+Si no defines `DATABASE_URL`, el backend usa SQLite temporal en `/tmp` (útil para demo, no para producción).
 
 ### 2) Deploy frontend
 
