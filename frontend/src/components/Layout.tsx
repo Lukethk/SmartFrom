@@ -3,10 +3,9 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 const navItems = [
-  { to: "/", label: "Dashboard", hint: "Resumen general" },
+  { to: "/", label: "Inicio rápido", hint: "Sube y convierte" },
   { to: "/templates", label: "Plantillas", hint: "Excel y mapeos" },
-  { to: "/validation", label: "Validación", hint: "Revisión asistida" },
-  { to: "/guide", label: "Guía de usuario", hint: "Cómo usar la plataforma" },
+  { to: "/guide", label: "Guía", hint: "Cómo usar la plataforma" },
 ];
 
 export function Layout() {
@@ -25,9 +24,9 @@ export function Layout() {
         <aside className="glass-panel sticky top-4 hidden h-[calc(100vh-2rem)] w-[290px] shrink-0 flex-col rounded-[28px] p-5 shadow-[0_25px_80px_rgba(15,23,42,0.18)] lg:flex">
           <div className="rounded-[24px] bg-brand-deep px-5 py-5 text-white shadow-lg shadow-brand-deep/20">
             <p className="text-xs uppercase tracking-[0.32em] text-brand-soft/80">SmartForm</p>
-            <h1 className="mt-2 font-display text-2xl font-semibold">Control de formularios con estilo</h1>
+            <h1 className="mt-2 font-display text-2xl font-semibold">Sube la foto y obtén tu Excel</h1>
             <p className="mt-2 text-sm text-brand-soft/90">
-              Captura, valida y exporta con una interfaz que prioriza claridad y velocidad.
+              Un flujo simple para convertir imágenes de formularios en archivos Excel listos para usar.
             </p>
           </div>
 
@@ -69,10 +68,6 @@ export function Layout() {
               <div className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2">
                 <span>Subir plantilla</span>
                 <span className="rounded-full bg-brand-soft px-2 py-1 text-xs text-brand-deep">Plantillas</span>
-              </div>
-              <div className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2">
-                <span>Validar lote</span>
-                <span className="rounded-full bg-brand-soft px-2 py-1 text-xs text-brand-deep">Grid</span>
               </div>
               <div className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2">
                 <span>Exportar xlsx</span>
