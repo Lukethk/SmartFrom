@@ -1,0 +1,41 @@
+[project]
+name = "smartform-backend"
+version = "0.1.0"
+description = "SmartForm API"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.116.0",
+  "uvicorn[standard]>=0.35.0",
+  "sqlalchemy>=2.0.38",
+  "psycopg2-binary>=2.9.10",
+  "alembic>=1.14.0",
+  "python-jose[cryptography]>=3.3.0",
+  "passlib[bcrypt]>=1.7.4",
+  "python-multipart>=0.0.9",
+  "pydantic-settings>=2.7.1",
+  "redis>=5.2.1",
+  "rq>=1.16.2",
+  "openpyxl>=3.1.5",
+  "httpx>=0.28.1",
+  "email-validator>=2.2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.4.1",
+  "pytest-cov>=6.0.0",
+  "ruff>=0.12.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["app/tests"]
+
+[tool.ruff]
+line-length = 100
+
+[build-system]
+requires = ["setuptools>=69.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
