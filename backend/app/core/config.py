@@ -21,3 +21,14 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+
+
+def normalized_database_url(raw_url: str) -> str:
+    url = (raw_url or "").strip()
+    if not url:
+        return "sqlite:////tmp/smartform.db"
+    if url.startswith("postgres://"):
+        return "postgresql+psycopg2://" + url[len("postgres://") :]
+    if url.startswith("postgresql://"):
+        return "postgresql+psycopg2://" + url[len("postgresql://") :]
+    return url

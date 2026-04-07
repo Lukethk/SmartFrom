@@ -3,9 +3,14 @@ from collections.abc import Generator
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
-from app.core.config import settings
+from app.core.config import normalized_database_url, settings
 
-engine = create_engine(settings.database_url, future=True, pool_pre_ping=True)
+db_url = normalized_database_url(settings.database_url)
+engine_kwargs = {"future": True, "pool_pre_ping": True}
+if db_url.startswith("sqlite"):
+    engine_kwargs["connect_args"] = {"check_same_thread": False}
+
+engine = create_engine(db_url, **engine_kwargs)
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False, future=True)
 
 

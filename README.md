@@ -79,6 +79,7 @@ Plataforma web para extraer datos de formularios físicos, validar resultados y 
    - `REFRESH_TOKEN_EXPIRE_MINUTES=10080`
    - `RESET_TOKEN_EXPIRE_MINUTES=30`
    - `DATABASE_URL=<postgresql+psycopg2://... de Neon>` (recomendado)
+     - También acepta `postgres://...` y `postgresql://...` (se normaliza automáticamente).
    - `GEMINI_API_KEY=<tu-api-key>`
    - `GEMINI_MODEL=gemini-2.5-flash`
    - `CORS_ORIGINS=<url-del-frontend>`

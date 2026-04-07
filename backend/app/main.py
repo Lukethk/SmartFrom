@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -7,6 +9,8 @@ from app.db.base import Base
 from app.db.session import engine
 
 app = FastAPI(title=settings.app_name)
+logger = logging.getLogger("smartform")
+startup_error: str | None = None
 
 app.add_middleware(
     CORSMiddleware,
@@ -19,7 +23,13 @@ app.add_middleware(
 
 @app.on_event("startup")
 def startup() -> None:
-    Base.metadata.create_all(bind=engine)
+    global startup_error
+    try:
+        Base.metadata.create_all(bind=engine)
+        startup_error = None
+    except Exception as exc:
+        startup_error = str(exc)
+        logger.exception("Startup DB initialization failed: %s", exc)
 
 
 app.include_router(health.router)
