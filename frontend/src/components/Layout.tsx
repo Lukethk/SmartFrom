@@ -4,7 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 
 const navItems = [
   { to: "/", label: "Inicio rápido", hint: "Sube y convierte" },
-  { to: "/templates", label: "Plantillas", hint: "Excel y mapeos" },
+  { to: "/templates", label: "Excel", hint: "Empleados" },
   { to: "/guide", label: "Guía", hint: "Cómo usar la plataforma" },
 ];
 
@@ -66,8 +66,8 @@ export function Layout() {
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Atajos</p>
             <div className="mt-3 space-y-2 text-sm">
               <div className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2">
-                <span>Subir plantilla</span>
-                <span className="rounded-full bg-brand-soft px-2 py-1 text-xs text-brand-deep">Plantillas</span>
+                <span>Excel de empleados</span>
+                <span className="rounded-full bg-brand-soft px-2 py-1 text-xs text-brand-deep">Fijo</span>
               </div>
               <div className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2">
                 <span>Exportar xlsx</span>

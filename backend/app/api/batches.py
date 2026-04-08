@@ -29,7 +29,7 @@ async def create_batch(
     user: User = Depends(get_current_user),
 ) -> Batch:
     template = db.get(Template, template_id)
-    if not template or template.owner_id != user.id:
+    if not template:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Template not found")
     if not files:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No files uploaded")

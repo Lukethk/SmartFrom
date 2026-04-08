@@ -55,6 +55,7 @@ Plataforma web para extraer datos de formularios físicos, validar resultados y 
 - Incluye autenticación sin roles.
 - No incluye módulo de auditoría.
 - No persiste archivos binarios de lotes ni exportes en disco: se procesan temporalmente.
+- El flujo es preset-only: el primer Excel disponible es `Empleados` y no se edita desde la UI.
 
 ## Despliegue gratuito sin Docker (Vercel)
 

@@ -7,6 +7,7 @@ from app.api import auth, batches, extractions, exports, health, mappings, templ
 from app.core.config import settings
 from app.db.base import Base
 from app.db.session import engine
+from app.services.presets import seed_presets
 
 app = FastAPI(title=settings.app_name)
 logger = logging.getLogger("smartform")
@@ -26,6 +27,13 @@ def startup() -> None:
     global startup_error
     try:
         Base.metadata.create_all(bind=engine)
+        from app.db.session import SessionLocal
+
+        db = SessionLocal()
+        try:
+            seed_presets(db)
+        finally:
+            db.close()
         startup_error = None
     except Exception as exc:
         startup_error = str(exc)

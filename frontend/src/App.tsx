@@ -6,7 +6,6 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const DashboardPage = lazy(() => import("./pages/DashboardPage"));
 const TemplatesPage = lazy(() => import("./pages/TemplatesPage"));
-const ValidationPage = lazy(() => import("./pages/ValidationPage"));
 const GuidePage = lazy(() => import("./pages/GuidePage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
@@ -25,7 +24,7 @@ export default function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<DashboardPage />} />
             <Route path="/templates" element={<TemplatesPage />} />
-            <Route path="/validation" element={<ValidationPage />} />
+            <Route path="/validation" element={<Navigate to="/" replace />} />
             <Route path="/guide" element={<GuidePage />} />
           </Route>
         </Route>

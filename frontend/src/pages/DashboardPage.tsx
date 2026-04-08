@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { createBatch, listMappings, listTemplates, MappingProfile, Template } from "../api/client";
@@ -12,7 +12,6 @@ export default function DashboardPage() {
   const [selectedTemplateId, setSelectedTemplateId] = useState("");
   const [selectedMappingId, setSelectedMappingId] = useState("");
   const [files, setFiles] = useState<File[]>([]);
-  const [batchName, setBatchName] = useState("");
   const [message, setMessage] = useState("");
   const [isWorking, setIsWorking] = useState(false);
 
@@ -31,27 +30,23 @@ export default function DashboardPage() {
     if (!selectedTemplateId && templates[0]) setSelectedTemplateId(templates[0].id);
   }, [templates, selectedTemplateId]);
 
-  const templateMappings = useMemo(
-    () => mappings.filter((mapping) => mapping.template_id === selectedTemplateId),
-    [mappings, selectedTemplateId],
-  );
-
   useEffect(() => {
+    const templateMappings = mappings.filter((mapping) => mapping.template_id === selectedTemplateId);
     if (templateMappings.length > 0) {
       setSelectedMappingId(templateMappings[0].id);
     } else {
       setSelectedMappingId("");
     }
-  }, [templateMappings]);
+  }, [mappings, selectedTemplateId]);
 
   const quickConvert = async () => {
     if (!accessToken) return;
     if (!selectedTemplateId) {
-      setMessage("Primero crea o elige una plantilla.");
+      setMessage("Selecciona el Excel de empleados.");
       return;
     }
     if (!selectedMappingId) {
-      setMessage("La plantilla seleccionada no tiene mapeo. Crea uno en Plantillas.");
+      setMessage("El preset de empleados no se cargó correctamente.");
       return;
     }
     if (files.length === 0) {
@@ -62,7 +57,7 @@ export default function DashboardPage() {
     setIsWorking(true);
     setMessage("Procesando la imagen y generando el Excel...");
     try {
-      const batch = await createBatch(accessToken, selectedTemplateId, batchName || "Lote rápido", files);
+      const batch = await createBatch(accessToken, selectedTemplateId, "Importación de empleados", files);
       await downloadFile("/exports/xlsx", accessToken, {
         batch_id: batch.id,
         mapping_profile_id: selectedMappingId,
@@ -71,7 +66,6 @@ export default function DashboardPage() {
       setMessage("Listo. Tu Excel ya se descargó.");
       await refresh();
       setFiles([]);
-      setBatchName("");
     } catch (error) {
       setMessage((error as Error).message || "No se pudo convertir la foto.");
     } finally {
@@ -90,10 +84,10 @@ export default function DashboardPage() {
               SmartForm está pensado para una sola tarea principal: cargar una imagen o PDF, convertirlo con IA y descargar el Excel final.
             </p>
           </div>
-          <div className="grid gap-3 sm:grid-cols-3 lg:min-w-[360px]">
-            <div className="rounded-2xl bg-white/10 px-4 py-3 backdrop-blur">
-              <p className="text-xs uppercase tracking-[0.24em] text-white/60">1</p>
-              <p className="mt-1 text-lg font-semibold">Sube la foto</p>
+            <div className="grid gap-3 sm:grid-cols-3 lg:min-w-[360px]">
+              <div className="rounded-2xl bg-white/10 px-4 py-3 backdrop-blur">
+                <p className="text-xs uppercase tracking-[0.24em] text-white/60">1</p>
+                <p className="mt-1 text-lg font-semibold">Sube la foto</p>
             </div>
             <div className="rounded-2xl bg-white/10 px-4 py-3 backdrop-blur">
               <p className="text-xs uppercase tracking-[0.24em] text-white/60">2</p>
@@ -111,38 +105,28 @@ export default function DashboardPage() {
         <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-4">
             <div>
-              <p className="text-xs uppercase tracking-[0.28em] text-slate-500">Paso principal</p>
-              <h3 className="mt-2 font-display text-3xl font-semibold text-brand-deep">Convierte en un clic</h3>
-              <p className="mt-2 text-sm text-slate-600">
-                Selecciona una plantilla, sube tus fotos y deja que el sistema entregue el archivo Excel listo para usar.
-              </p>
-            </div>
+            <p className="text-xs uppercase tracking-[0.28em] text-slate-500">Paso principal</p>
+            <h3 className="mt-2 font-display text-3xl font-semibold text-brand-deep">Convierte en un clic</h3>
+            <p className="mt-2 text-sm text-slate-600">
+              Solo elige el Excel de empleados, sube tus fotos y deja que el sistema entregue el archivo listo para usar.
+            </p>
+          </div>
 
-            <div className="grid gap-3 md:grid-cols-2">
-              <label className="space-y-2">
-                <span className="text-sm font-semibold text-slate-700">Plantilla</span>
-                <select
-                  className="soft-input w-full"
-                  value={selectedTemplateId}
-                  onChange={(e) => setSelectedTemplateId(e.target.value)}
-                >
-                  <option value="">Selecciona una plantilla</option>
-                  {templates.map((tpl) => (
-                    <option key={tpl.id} value={tpl.id}>{tpl.name}</option>
-                  ))}
-                </select>
-              </label>
-
-              <label className="space-y-2">
-                <span className="text-sm font-semibold text-slate-700">Nombre del lote</span>
-                <input
-                  className="soft-input w-full"
-                  placeholder="Ej. fotos de enero"
-                  value={batchName}
-                  onChange={(e) => setBatchName(e.target.value)}
-                />
-              </label>
-            </div>
+            <label className="space-y-2">
+              <span className="text-sm font-semibold text-slate-700">Excel</span>
+              <select
+                className="soft-input w-full"
+                value={selectedTemplateId}
+                onChange={(e) => setSelectedTemplateId(e.target.value)}
+              >
+                <option value="">Selecciona un Excel</option>
+                {templates.map((tpl) => (
+                  <option key={tpl.id} value={tpl.id}>
+                    {tpl.name}
+                  </option>
+                ))}
+              </select>
+            </label>
 
             <label className="block space-y-2">
               <span className="text-sm font-semibold text-slate-700">Sube la foto o PDF</span>
@@ -160,7 +144,7 @@ export default function DashboardPage() {
                 {isWorking ? "Procesando..." : "Convertir a Excel"}
               </button>
               <Link to="/templates" className="rounded-2xl border border-slate-200 bg-white px-5 py-3 font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-                Crear plantilla
+                Ver Excel disponibles
               </Link>
               <Link to="/guide" className="rounded-2xl border border-transparent px-5 py-3 font-semibold text-brand-deep transition hover:bg-brand-soft">
                 Ver guía
@@ -183,7 +167,7 @@ export default function DashboardPage() {
 
             <div className="mt-5 space-y-3">
               <div className="rounded-2xl bg-brand-soft/60 p-4">
-                <p className="text-xs uppercase tracking-[0.22em] text-slate-500">Plantilla activa</p>
+                <p className="text-xs uppercase tracking-[0.22em] text-slate-500">Excel activo</p>
                 <p className="mt-1 font-semibold text-slate-900">
                   {templates.find((tpl) => tpl.id === selectedTemplateId)?.name ?? "Ninguna seleccionada"}
                 </p>
@@ -191,7 +175,7 @@ export default function DashboardPage() {
               <div className="rounded-2xl bg-brand-soft/60 p-4">
                 <p className="text-xs uppercase tracking-[0.22em] text-slate-500">Mapeo activo</p>
                 <p className="mt-1 font-semibold text-slate-900">
-                  {templateMappings.find((map) => map.id === selectedMappingId)?.name ?? "Sin mapeo"}
+                  {mappings.find((map) => map.id === selectedMappingId)?.name ?? "Sin mapeo"}
                 </p>
               </div>
               <div className="rounded-2xl bg-brand-soft/60 p-4">
