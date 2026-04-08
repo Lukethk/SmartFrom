@@ -59,6 +59,10 @@ PRESET_EMPLOYEES = {
 }
 
 
+def employee_logical_keys() -> list[str]:
+    return [logical_key for logical_key, _, _ in PRESET_EMPLOYEES["fields"]]
+
+
 def seed_presets(db: Session) -> None:
     existing = db.scalar(select(Template).where(Template.name == PRESET_EMPLOYEES["name"]))
     if existing:

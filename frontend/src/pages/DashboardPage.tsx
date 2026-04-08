@@ -63,7 +63,7 @@ export default function DashboardPage() {
       await downloadFile("/exports/xlsx", accessToken, {
         batch_id: batch.id,
         mapping_profile_id: activeMapping.id,
-        include_only_validated: true,
+        include_only_validated: false,
       });
       setMessage("Listo. Tu Excel de empleados ya se descargó.");
       await refresh();
