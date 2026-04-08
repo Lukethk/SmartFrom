@@ -56,6 +56,7 @@ Plataforma web para extraer datos de formularios físicos, validar resultados y 
 - No incluye módulo de auditoría.
 - No persiste archivos binarios de lotes ni exportes en disco: se procesan temporalmente.
 - El flujo es preset-only: el primer Excel disponible es `Empleados` y no se edita desde la UI.
+- En Vercel, el proceso de conversión corre por defecto en modo síncrono para no depender de Redis.
 
 ## Despliegue gratuito sin Docker (Vercel)
 

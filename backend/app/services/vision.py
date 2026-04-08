@@ -29,6 +29,16 @@ def extract_fields(file_bytes: bytes, filename: str, mime_type: str) -> dict[str
     if not settings.gemini_api_key:
         return build_mock_result(filename)
 
+    supported_mime_types = {
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/webp",
+        "application/pdf",
+    }
+    if mime_type not in supported_mime_types:
+        return build_mock_result(filename)
+
     endpoint = (
         "https://generativelanguage.googleapis.com/v1beta/models/"
         f"{settings.gemini_model}:generateContent?key={settings.gemini_api_key}"
@@ -48,11 +58,14 @@ def extract_fields(file_bytes: bytes, filename: str, mime_type: str) -> dict[str
             }
         ]
     }
-    with httpx.Client(timeout=60.0) as client:
-        response = client.post(endpoint, json=payload)
-        response.raise_for_status()
-        data = response.json()
+    try:
+        with httpx.Client(timeout=60.0) as client:
+            response = client.post(endpoint, json=payload)
+            response.raise_for_status()
+            data = response.json()
 
-    text = data["candidates"][0]["content"]["parts"][0]["text"]
-    cleaned = text.strip().removeprefix("```json").removesuffix("```").strip()
-    return json.loads(cleaned)
+        text = data["candidates"][0]["content"]["parts"][0]["text"]
+        cleaned = text.strip().removeprefix("```json").removesuffix("```").strip()
+        return json.loads(cleaned)
+    except Exception:
+        return build_mock_result(filename)

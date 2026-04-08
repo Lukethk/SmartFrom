@@ -51,13 +51,22 @@ async def create_batch(
 
         file_b64 = base64.b64encode(content).decode("utf-8")
         if settings.use_async_queue:
-            enqueue_document_job(
-                document_id=doc.id,
-                template_id=template_id,
-                filename=file.filename,
-                mime_type=file.content_type or "application/octet-stream",
-                file_b64=file_b64,
-            )
+            try:
+                enqueue_document_job(
+                    document_id=doc.id,
+                    template_id=template_id,
+                    filename=file.filename,
+                    mime_type=file.content_type or "application/octet-stream",
+                    file_b64=file_b64,
+                )
+            except Exception:
+                process_document_job(
+                    document_id=doc.id,
+                    template_id=template_id,
+                    filename=file.filename,
+                    mime_type=file.content_type or "application/octet-stream",
+                    file_b64=file_b64,
+                )
         else:
             process_document_job(
                 document_id=doc.id,

@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     gemini_api_key: str = ""
     gemini_model: str = "gemini-2.5-flash"
     cors_origins: str = "http://localhost:5173"
-    use_async_queue: bool = True
+    use_async_queue: bool = False
 
 
 settings = Settings()
